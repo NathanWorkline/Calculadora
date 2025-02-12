@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Preço</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .container {
+      background: #1a1a1a;
+      border: 2px solid #e30613;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      padding: 20px 40px;
+      max-width: 500px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    h1 span {
+      color: #e30613;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1.8rem;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 1.8rem;
+      background: #e30613;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #c20510;
+    }
+
+    .resultado {
+      margin-top: 20px;
+      padding: 15px;
+      background: #333;
+      border-radius: 5px;
+      font-size: 1.8rem;
+      color: #d3d3d3;
+    }
+
+    footer {
+      font-size: 1.4rem;
+      color: #d3d3d3;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1><span>Calculadora</span> de Preço</h1>
+    
+    <label for="custo">Preço de Custo:</label>
+    <input type="number" id="custo" placeholder="Digite o preço de custo" step="any">
+
+    <label for="frete">Frete:</label>
+    <input type="number" id="frete" placeholder="Digite o valor do frete" step="any">
+
+    <label for="desconto">Desconto (%):</label>
+    <input type="number" id="desconto" placeholder="Digite o desconto em %" step="any">
+
+    <button onclick="calcularPreco()">Calcular</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <footer>
+      <img src="Assets/logo.png" alt="Logo" style="max-width: 15%; height: auto;"> - Viva a Ergoprodutividade!
+    </footer>
+  </div>
+
+  <script>
+    function calcularPreco() {
+      // Obtém os valores digitados e converte para número
+      var custo = parseFloat(document.getElementById('custo').value);
+      var frete = parseFloat(document.getElementById('frete').value);
+      var desconto = parseFloat(document.getElementById('desconto').value);
+
+      // Verifica se os valores de custo e frete são válidos
+      if (isNaN(custo) || isNaN(frete)) {
+        document.getElementById('resultado').innerHTML = "Por favor, preencha os campos de custo e frete com valores válidos.";
+        return;
+      }
+
+      // Se o desconto não for informado, considera 0%
+      if (isNaN(desconto)) {
+        desconto = 0;
+      }
+
+      // Soma custo + frete e acrescenta 100% de ganho (multiplicando por 2)
+      var soma = custo + frete;
+      var precoFinalSemDesconto = soma * 2;
+
+      // Aplica o desconto
+      var precoFinalComDesconto = precoFinalSemDesconto * (1 - desconto / 100);
+
+      // Exibe o resultado formatado
+      var resultadoHTML = "<p>Preço final sem desconto: R$ " + precoFinalSemDesconto.toFixed(2) + "</p>";
+      resultadoHTML += "<p>Preço final com desconto: R$ " + precoFinalComDesconto.toFixed(2) + "</p>";
+      document.getElementById('resultado').innerHTML = resultadoHTML;
+    }
+  </script>
+</body>
+
+</html>
